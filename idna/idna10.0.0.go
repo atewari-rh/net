@@ -370,6 +370,9 @@ func (p *Profile) process(s string, toASCII bool) (string, error) {
 				// Spec says keep the old label.
 				continue
 			}
+			if err == nil && len(u) > 0 && ascii(u) {
+				err = punyError(label[len(acePrefix):])
+			}
 			isBidi = isBidi || bidirule.DirectionString(u) != bidi.LeftToRight
 			labels.set(u)
 			if err == nil && p.fromPuny != nil {
